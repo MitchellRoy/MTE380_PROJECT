@@ -169,8 +169,12 @@ void loop() {
     stopMoving();
     while(1);
   }
-  
-//  Serial.print(left_pulses);
-//  Serial.print(right_pulses);
-//  Serial.println();
+
+  Serial.print("Left: ");
+  Serial.print(left_pulses);
+  Serial.print("  Right: ");
+  Serial.print(right_pulses);
+  Serial.print("  PError: ");
+  Serial.print(Actual);
+  Serial.println();
 }
