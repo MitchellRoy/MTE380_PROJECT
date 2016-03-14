@@ -158,8 +158,8 @@ void rotateRight(uint16_t pwm) {
 // Drive Straight Vars w/ Accel.
 int travel_dist = 0;
 int rampSpeed = 0;
-int maxSpeed = 150;
-int startAccel = 15;
+int maxSpeed = 240;
+int startAccel = 180;
 int startAccelTime = 0;
 int accelDone = 0;
 
@@ -176,7 +176,7 @@ void updateAccel() {
     Serial.print("updateAccel: ");
     Serial.print(rampSpeed);
     Serial.println("");
-    rampSpeed = startAccel*((millis() - startAccelTime)/1000);
+    rampSpeed = (startAccel*(millis() - startAccelTime))/1000;
     if (rampSpeed > maxSpeed) {
       rampSpeed = maxSpeed;
       accelDone = 1;
@@ -287,11 +287,11 @@ void loop() {
     case RIGHT_SCAN:
       if (right_pulses >= 290 || left_pulses >= 290) {
         stopMoving();
-        rampSpeed = 0;
+        rampSpeed = 10;
         delay(100);
         state = LEFT_SCAN;
         resetEncoder();
-        rotateLeft(20);
+        rotateLeft(rampSpeed);
       }
       pid_control();
       break;
@@ -313,7 +313,7 @@ void loop() {
                 delay(1);
               }
               stopMoving();
-              delay(200);
+              delay(10);
               state = STRAIGHT;
               resetEncoder();
               driveStraight(rampSpeed);
